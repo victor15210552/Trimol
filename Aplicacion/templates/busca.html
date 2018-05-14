@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{%block content%}
+
+{%if hospital%}
+		<ol>
+			
+	{%for hospital in Hospitales%}
+        
+	        <li><h3><a href="{{ hospital.get_absolute_url}}">
+	        		<big>{{ hospital.Nombre}}</big></h3></a>
+              Recomendaciones: <b>{{hospital.calificacion}}</b>, {{hospital.Sector}}.
+        <p></p>
+        <p></p>
+              {% if hospital.Imagen %}
+              <img class="img-rounded center-block" src="{{hospital.Imagen.url}}" height="400" width="550">
+              {% endif %}
+          </li> 
+	      
+
+   <!-- <div id="map"></div>
+    <script>    
+      function initMap() {
+        var uluru = {lat: {{hospital.Latitud}}, lng: {{hospital.Longitud}} }; 
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 17,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDptcwGDvRThh5vZvP7UEdsOWSUmPsO0MU&callback=initMap">
+    </script>
+    -->
+        <p></p>
+	{%endfor%}
+	</ol>
+
+    {% endif %}
+{%endblock%}

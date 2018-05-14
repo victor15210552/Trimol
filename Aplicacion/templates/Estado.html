@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Formulario</title>
+</head>
+<body>
+<form method="POST">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<input type="submit" name="Register">
+	<input type="reset" name="Cancel">
+</form>
+</body>
+</html>

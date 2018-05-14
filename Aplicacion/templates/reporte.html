@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content%}
+<body>
+<table>
+
+		  <tr>
+		      <th>Nombre Hospital</th>
+		      <th>Sector</th>
+		      <th>Direccion</th>
+		      <th>Ciudad</th>
+		      <th>Telefono</th>
+		      <th>Especialidad</th>
+		      <th>Pagina</th>
+		      <th>Horario</th>
+		      <th>Slug</th>
+		      
+		  </tr>
+	    <tbody>
+
+		{% for Hospital in Hospital %}
+			<tr>
+				<!-- Hospital.campo, proviene especifica que campo seleccionará del modelo. (Ver models.py pls)-->
+				<td>{{ Hospital.Nombre }}</td>
+				<td>{{ Hospital.Sector }}</td>
+				<td>{{ Hospital.Direccion }}</td>
+				<td>{{ Hospital.Ciudad }}</td>
+				<td>{{ Hospital.Telefono }}</td>
+				<td>{% for Especialidad in Hospital.Especialidad.all %}
+				{{ Especialidad.Especialidad }}
+				{%endfor%}</td>
+				<td>{{ Hospital.Pagina_Oficial }}</td>
+				<td>{{ Hospital.Horario }}</td>
+				<td>{{ Hospital.slug }}</td>
+		        
+			</tr>
+		{% endfor %}
+		</tbody>
+</table>
+</body>
+{%endblock%}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geolocation</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  
+  <<!--prueba localizacion-->>
+  <body>
+    <div id="map"></div>
+    <script>
+      // Note: This example requires that you consent to location sharing when
+      // prompted by your browser. If you see the error "The Geolocation service
+      // failed.", it means you probably did not give permission for the browser to
+      // locate you.
+
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 6
+        });
+        var infoWindow = new google.maps.InfoWindow({map: map});
+
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('Tu estas por aqui??');
+            map.setCenter(pos);
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+        }
+      }
+
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDptcwGDvRThh5vZvP7UEdsOWSUmPsO0MU&callback=initMap">
+    </script>
+
+ <!-- begin wwww.htmlcommentbox.com -->
+ <div id="HCB_comment_box"><a href="http://www.htmlcommentbox.com">HTML Comment Box</a> is loading comments...</div>
+ <link rel="stylesheet" type="text/css" href="//www.htmlcommentbox.com/static/skins/bootstrap/twitter-bootstrap.css?v=0" />
+ <script type="text/javascript" id="hcb"> /*<!--*/ if(!window.hcb_user){hcb_user={};} (function(){var s=document.createElement("script"), l=hcb_user.PAGE || (""+window.location).replace(/'/g,"%27"), h="//www.htmlcommentbox.com";s.setAttribute("type","text/javascript");s.setAttribute("src", h+"/jread?page="+encodeURIComponent(l).replace("+","%2B")+"&mod=%241%24wq1rdBcg%24h1rLIOO10wCw.qP2zD92N."+"&opts=21470&num=30&ts=1523236376006");if (typeof s!="undefined") document.getElementsByTagName("head")[0].appendChild(s);})(); /*-->*/ </script>
+<!-- end www.htmlcommentbox.com -->
+
+<!-- start Feedback -->
+<script data-sil-id='5acabfdbb2632c002df267f5'> (function() {var d = document, w = window, l = window.location,p = l.protocol == 'file:' ? 'http://' : '//';if (!w.WS) w.WS = {}; c = w.WS;var m=function(t, o){  var e = d.getElementsByTagName('script'); e=e[e.length-1];  var n = d.createElement(t); if (t=='script') {n.async=true;} for (k in o) n[k] = o[k];  e.parentNode.insertBefore(n, e)};   m('script', {      src: p+'bawkbox.com/widget/feedback/5acabfdbb2632c002df267f5?page='+encodeURIComponent(l+''),      type: 'text/javascript'  });  c.load_net = m;})();</script>
+<div class='sil-widget-feedback sil-widget' id='sil-widget-5acabfdbb2632c002df267f5'><a href='https://bawkbox.com/install/feedback'></a></div>
+<!-- end Feedback -->
+<SELECT NAME="selCombo" SIZE=1 onChange="javascript:alert('prueba');"> 
+<OPTION VALUE="link pagina 1"><a href="http://localhost:8000">opcion1</a></OPTION>
+<OPTION VALUE="link pagina 2">opcion2</OPTION>
+<OPTION VALUE="link pagina 3">opcion3</OPTION>
+<OPTION VALUE="link pagina 4">opcion4</OPTION> 
+</SELECT> 
+
+  </body>
+  <img src="/home/sanchez/Escritorio/Trimol/media/A.png">
+
+</html>
