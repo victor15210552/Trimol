@@ -1,0 +1,435 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<title>Trimol</title>
+	<link rel="stylesheet" href="{% static 'doctor/css/font-awesome.min.css'%}">
+	<link rel="stylesheet" href="{% static 'doctor/css/bootstrap.min.css'%}">
+	<link rel="stylesheet" href="{% static 'doctor/css/style.css'%}">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:600italic,400,800,700,300' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=BenchNine:300,400,700' rel='stylesheet' type='text/css'>
+	<script src="{% static 'doctor/js/modernizr.js'%}"></script>
+	<!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+	
+	<!-- ====================================================
+	header section -->
+	<header class="top-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-5 header-logo">
+					<br>
+					<a href="/index"><img src="{% static 'doctor/img/Trimoll.png'%}" alt="" class="img-responsive logo" height="100" width="200"></a>
+				</div>
+
+				<div class="col-md-7">
+					<nav class="navbar navbar-default">
+					  <div class="container-fluid nav-bar">
+					    <!-- Brand and toggle get grouped for better mobile display -->
+					    <div class="navbar-header">
+					      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					        <span class="sr-only">Toggle navigation</span>
+					        <span class="icon-bar"></span>
+					        <span class="icon-bar"></span>
+					        <span class="icon-bar"></span>
+					      </button>
+					    </div>
+
+					    <!-- Collect the nav links, forms, and other content for toggling -->
+					    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					      {% block navbar %}
+					      <ul class="nav navbar-nav navbar-right">
+					         <li><a class="menu active" href="index#home" style="font-size:150%">Home</a></li>
+                 <li><a class="menu" href="/perfil_view/" style="font-size:150%">Perfil</a></li>
+                 <li><a class="menu" href="index#service" style="font-size:150%">Buscar</a></li>
+                 <li><a class="menu" href="index#contact" style="font-size:150%"> Contactanos</a></li>
+                 <li><a class="menu" href="/logout" style="font-size:150%"> Cerrar Sesion</a></li>
+                        {% endblock %}
+					      </ul>
+					    </div><!-- /navbar-collapse -->
+					  </div><!-- / .container-fluid -->
+					</nav>
+				</div>
+			</div>
+		</div>
+	</header> <!-- end of header area -->
+
+
+	<section class="slider" id="home">
+		<div class="container-fluid">
+			<div class="row">
+			    <div id="carouselHacked" class="carousel slide carousel-fade" data-ride="carousel">
+					<div class="header-backup"></div>
+			        <!-- Wrapper for slides -->
+			        <div class="carousel-inner" role="listbox">
+			            <div class="item active">
+			            	<img src="{% static 'doctor/img/slide-one.jpg'%}" alt="">
+			                <div class="carousel-caption">
+		               			<h1>Bienvenido</h1>
+		               			<p>{{ user.first_name }} {{ user.last_name }}</p>
+		               			
+			                </div>
+			            </div>
+			            <div class="item">
+			            	<img src="{% static 'doctor/img/slide-two.jpg'%}" alt="">
+			                <div class="carousel-caption">
+		               			<h1>Bienvenido</h1>
+		               			<p>{{ user.first_name }} {{ user.last_name }}</p>
+			                </div>
+			            </div>
+			            <div class="item">
+			            	<img src="{% static 'doctor/img/slide-three.jpg'%}" alt="">
+			                <div class="carousel-caption">
+		               			<h1>Bienvenido</h1>
+		               			<p>{{ user.first_name }} {{ user.last_name }}</p>
+			                </div>
+			            </div>
+			            <div class="item">
+			            	<img src="{% static 'doctor/img/slide-four.jpg'%}" alt="">
+			                <div class="carousel-caption">
+		               			<h1>Bienvenido</h1>
+		               			<p>{{ user.first_name }} {{ user.last_name }}</p>
+			                </div>
+			            </div>
+			        </div>
+			        <!-- Controls -->
+			        <a class="left carousel-control" href="#carouselHacked" role="button" data-slide="prev">
+			            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+			            <span class="sr-only">Previous</span>
+			        </a>
+			        <a class="right carousel-control" href="#carouselHacked" role="button" data-slide="next">
+			            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+			            <span class="sr-only">Next</span>
+			        </a>
+			    </div>
+			</div>
+		</div>
+	</section><!-- end of slider section -->
+
+	<!-- about section -->
+	<section class="about text-center" id="about">
+	<br>
+<br>
+<br>
+
+		<div class="container">
+			<div class="row">
+				<h2>Acerca de Nosotros</h2>
+				<h4>Trimol es una aplicacion web realizada en python y django 2, con la finalidad de facilitar la busqueda de hospitales mediante una base de datos, la creacion de vistas, asi como de funciones y la utilizacion de HTMLs.</h4>
+				<div class="col-md-4 col-sm-6">
+					<div class="single-about-detail clearfix">
+						<div class="about-img">
+							<img class="img-responsive" src="{% static 'doctor/img/item1.jpg'%}" alt="">
+						</div>
+						<div class="about-details">
+							<div class="pentagon-text">
+								<h1>C</h1>
+							</div>
+							<h3>Misión:</h3>
+							<p>Ayudar a nuestros usuarios a que cuenten con la información necesaria de cualquier hospital que se encuentre a su disposición.</p>
+							
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-6">
+					<div class="single-about-detail">
+						<div class="about-img">
+							<img class="img-responsive" src="{% static 'doctor/img/item2.jpg'%}" alt="">
+						</div>
+						<div class="about-details">
+							<div class="pentagon-text">
+								<h1>W</h1>
+							</div>
+                                 <h3>Visión:</h3>
+							<p>Ser una aplicación web con la capacidad de ofrecer a nuestros usuarios la búsqueda de cualquier hospital publico o privado dentro de nuestra región.
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-6">
+					<div class="single-about-detail">
+						<div class="about-img">
+							<img class="img-responsive" src="{% static 'doctor/img/item3.jpg'%}" alt="">
+						</div>
+						<div class="about-details">
+							<div class="pentagon-text">
+								<h1>M</h1>
+							</div>
+							<h3>Children’s specialist</h3>
+							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section><!-- end of about section -->
+
+
+
+
+	<!-- service section starts here -->
+	<section class="service text-center" id="service">
+	<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3 col-sm-6">
+					<div class="single-service">
+						<div class="single-service-img">
+							<div class="service-img">
+								<a href="/cercano/"><img class="heart img-responsive" src="{% static 'doctor/img/service1.png'%}" alt="" class="img-responsive logo"></a>
+							</div>
+						</div>
+						<h3>Hospitales Cercanos</h3>
+						<h4>Usted puede buscar todos los hospitales cercanos a usted </h4>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6">
+					<div class="single-service">
+						<div class="single-service-img">
+							<div class="service-img">
+								<a href="/privado/"><img class="brain img-responsive" src="{% static 'doctor/img/service2.png'%}" alt="" class="img-responsive logo"></a>
+							</div>
+						</div>
+						<h3>Privado</h3>
+						<h4>Usted puede buscar todos los hospitales privados</h4>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6">
+					<div class="single-service">
+						<div class="single-service-img">
+							<div class="service-img">
+								<a href="/publicos/"><img class="knee img-responsive" src="{% static 'doctor/img/service3.png'%}" alt="" class="img-responsive logo"></a>
+							</div>
+						</div>
+						<h3>Publico</h3>
+						<h4>Usted puede buscar todos los hospitales publicos </h4>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6">
+					<div class="single-service">
+						<div class="single-service-img">
+							<div class="service-img">
+								<a href="Todos"><img class="bone img-responsive" src="{% static 'doctor/img/service4.png'%}" alt="" class="img-responsive logo"></a>
+							</div>
+						</div>
+						<h3>Todos</h3>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</section><!-- end of service section -->
+
+	<br>
+
+	<!-- team section -->
+	<section class="team" id="team">
+<br>
+<br>
+<br>
+<br>
+<br>
+		<div class="container">
+			<div class="row">
+				<h3>Busqueda de Hospitales</h3>
+
+<!--Prueba 2 busqueda FAIL
+<input type="text" id="search" name="search">
+<ul id="search-result">
+  
+</ul>
+{%if Hospital.count > 0%}
+
+{%for Hospital in articles %}
+  <li><a href="/articles/get/{{Hospital.id}}/">{{Hospital.Nombre}}</a></li>
+{%endfor%}
+
+{%else%}
+
+<li>None to show!!</li>
+{%endif%}
+-->
+
+  <p>
+     <h3> En este espacio podra usted investigar algun hospital en especifico. </h3>
+  </p>
+
+
+  <!--Prueba Option Wait!!
+  <select>
+    <option>Elige un Hospital</option>
+    {%for Hospital in hospital%}
+    <option value="{{Hospital.Nombre}}">{{Hospital.Nombre}}</option>
+    {%endfor%}
+  </select>
+
+  <div id="datos">
+    
+  </div>-->
+
+  <div class="busqueda">
+    <form class="navbar-search pull-left" method="POST" action="/busca/">{% csrf_token %}
+      <input type="text" name="buscalo" class="search-query" placeholder="Buscar Hospital">
+      <div class="btn-group">
+        <button class="btn btn-primary" type="submit"><i class="icon-search"></i>          
+        </button>
+
+      </div>      
+    </form>
+
+  </div>
+
+
+
+       <div id="map"></div>
+    <script>
+      // Note: This example requires that you consent to location sharing when
+      // prompted by your browser. If you see the error "The Geolocation service
+      // failed.", it means you probably did not give permission for the browser to
+      // locate you.
+
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 15
+        });
+        var infoWindow = new google.maps.InfoWindow({map: map});
+
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('Tu estas por aqui!');
+            map.setCenter(pos);
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+        }
+      }
+
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDptcwGDvRThh5vZvP7UEdsOWSUmPsO0MU&callback=initMap">
+    </script>
+
+<!--
+   <div id="map"></div>
+    <script>
+      function initMap() {
+        var uluru = {lat: 32.530305, lng: -116.988158};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 15,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDptcwGDvRThh5vZvP7UEdsOWSUmPsO0MU&callback=initMap">
+    </script>
+-->
+				</div>
+			</div>
+		</div>
+	</section><!-- end of team section -->
+
+	<!-- map section -->
+	<div class="api-map" id="contact">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12 map" id="map"></div>
+			</div>
+		</div>
+	</div><!-- end of map section -->
+
+	<!-- contact section starts here -->
+	<section class="contact">
+		<div class="container">
+			<div class="row">
+				<div class="contact-caption clearfix">
+					<div class="contact-heading text-center">
+						<h2>contact us</h2>
+					</div>
+					<div class="col-md-5 contact-info text-left">
+						<h3>contact information</h3>
+						<div class="info-detail">
+							<ul><li><i class="fa fa-calendar"></i><span>Monday - Friday:</span> 9:30 AM to 6:30 PM</li></ul>
+							<ul><li><i class="fa fa-map-marker"></i><span>Address:</span> 123 Some Street , London, UK, CP 123</li></ul>
+							<ul><li><i class="fa fa-phone"></i><span>Phone:</span> (032) 987-1235</li></ul>
+							<ul><li><i class="fa fa-fax"></i><span>Fax:</span> (123) 984-1234</li></ul>
+							<ul><li><i class="fa fa-envelope"></i><span>Email:</span> info@doctor.com</li></ul>
+						</div>
+					</div>
+					<div class="col-md-6 col-md-offset-1 contact-form">
+						<h3>leave us a message</h3>
+
+						<form class="form">
+							<input class="name" type="text" placeholder="Name">
+							<input class="email" type="email" placeholder="Email">
+							<input class="phone" type="text" placeholder="Phone No:">
+							<textarea class="message" name="message" id="message" cols="30" rows="10" placeholder="Message"></textarea>
+							<input class="submit-btn" type="submit" value="SUBMIT">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section><!-- end of contact section -->
+
+	<!-- footer starts here -->
+	<footer class="footer clearfix">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-6 footer-para">
+					<p>&copy;Mostafizur All right reserved</p>
+				</div>
+				<div class="col-xs-6 text-right">
+					<a href=""><i class="fa fa-facebook"></i></a>
+					<a href=""><i class="fa fa-twitter"></i></a>
+					<a href=""><i class="fa fa-skype"></i></a>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<!-- script tags
+	============================================================= -->
+	<script src="{% static 'doctor/js/jquery-2.1.1.js'%}"></script>
+	<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+	<script src="{% static 'doctor/js/gmaps.js'%}"></script>
+	<script src="{% static 'doctor/js/smoothscroll.js'%}"></script>
+	<script src="{% static 'doctor/js/bootstrap.min.js'%}"></script>
+	<script src="{% static 'doctor/js/custom.js'%}"></script>
+</body>
+</html>

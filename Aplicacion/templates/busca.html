@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 
 {%block content%}
+<br><br><br><br><br><br><br>
 
 {%if hospital%}
 		<ol>
 			
 	{%for hospital in Hospitales%}
         
-	        <li><h3><a href="{{ hospital.get_absolute_url}}">
-	        		<big>{{ hospital.Nombre}}</big></h3></a>
-              Recomendaciones: <b>{{hospital.calificacion}}</b>, {{hospital.Sector}}.
+	        <li><FONT SIZE=7><a href="{{ hospital.get_absolute_url}}">
+	        		<big>{{ hospital.Nombre}}</big></FONT></a>
+              <h3>Recomendaciones: <b>{{hospital.calificacion}}</b><br>{{hospital.Sector}}.</h3>
         <p></p>
         <p></p>
               {% if hospital.Imagen %}

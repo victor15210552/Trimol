@@ -18,10 +18,11 @@ from django.urls import path
 from django.conf.urls import include, url
 from django.contrib.auth import views as auth_views
 
-from Aplicacion.views import prueba,buscar,contactos,Hospital,Estado,Sector,Especialidad,reporte_uno, Foro, Acerca, Nopermisos,Perfil,list_hospital
-from Aplicacion.views import TodasPublicaciones, ListaPublicacion,DetallePublicacion,BuscarView,BuscarEspecialidad,privado,publicos
+from Aplicacion.views import prueba,test,Ruta, buscar,contactos,Hospital,Estado,Sector,reporte_uno, Foro, Acerca, Nopermisos,Perfil,list_hospital
+from Aplicacion.views import TodasPublicaciones, ListaPublicacion,BuscarView,privado,publicos,datos_hosp
 
 from Aplicacion import views as core_views
+from Aplicacion.views import Perfil_View,Perfil_Update,DetallePublicacion
 
 #Prueva dinamic view
 from django.conf import settings
@@ -37,18 +38,19 @@ from django.views.static import serve
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', core_views.home, name='home'),
-    path('login/', auth_views.login, {'template_name': 'login.html'}, name='login'),
+    path('index', core_views.home, name='home'),
+    path('', auth_views.login, {'template_name': 'login.html'}, name='login'),
     path('logout/', auth_views.logout, {'next_page': 'login'}, name='logout'),
-    path('signup/', core_views.signup, name='signup'),
+    path('signup/', core_views.SignUp.as_view(), name='signup'),
     
+    path('prueba/', prueba,name ='prueba_view'),
+    path('test/', test,name ='test_view'),   
+    path('ruta/', Ruta,name ='Ruta_view'),   
 
-    path('prueba/', prueba,name ='prueba_view'),    
     path('contactos/', login_required( contactos),name ='contactos_view'),
 
 
     path('Hospital/', Hospital, name='Hospital_view'),
-    path('Especialidad/', Especialidad,name ='Especialidad_view'),
     path('Sector/', Sector,name ='Sector_view'),
     path('Estado/', Estado,name ='Estado_view'),
 
@@ -64,10 +66,10 @@ urlpatterns = [
     url(r'^privado',login_required( privado.as_view()),name='pub-list-privado'),
     url(r'^publicos',login_required( publicos.as_view()),name='pub-list-publicos'),
     #url(r'^entradas/(?P<slug>\w+)$', ListaPublicacion, name='pub-list'),
-    url(r'^(?P<pk>\d+)$', DetallePublicacion, name='pub-detail'),
+    url(r'^(?P<pk>\d+)$',DetallePublicacion, name='pub-detail'),
+   
 
    url(r'^busca/$', BuscarView.as_view(), name='busca'),
-   url(r'^buscaE/$', BuscarEspecialidad.as_view(), name='buscaE'),
    #path('busca/',BuscarView.as_view()),   
     path('buscar/',  buscar,name ='Busqueda_view'),
     path('foro/',login_required( Foro),name ='Foro_view'),
@@ -75,10 +77,14 @@ urlpatterns = [
 
 	#Login falso
     path('_', Nopermisos, name='Nopermisos_view'),
+    path('perfil_view/', Perfil_View.as_view(),name='perfil_view'),
 
     #Prueba imagen 1.0
     url(r'^list/all/$',list_hospital,name='see_post'),
 
+
+    url(r'^datos_hosp',datos_hosp.as_view(),name='datos_hosp'),
+    url(r'^update_perfil/(?P<pk>[\w-]+)$',Perfil_Update.as_view(),name='update_perfil'),
 ]
 
 if settings.DEBUG:

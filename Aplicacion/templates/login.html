@@ -1,8 +1,11 @@
-{% extends 'baselogin.html' %}
+{% extends 'login2.html' %}
 
-{% block content %}
-  <h2>Log in to Trimol</h2>
-  {% if form.errors %}
+{% load staticfiles %}
+ {% block content%}
+<font style="color: white">
+  <div class="login">
+  <h1>Login</h1>
+   {% if form.errors %}
     <p style="color: red">Your username and password didn't match. Please try again.</p>
   {% endif %}
   <form method="post">
@@ -20,7 +23,11 @@
         {% endif %}
       </p>
     {% endfor %}
-    <button type="submit">Log in</button>
-    <a href="{% url 'signup' %}">Eres Nuevo en Trimol? Sign up</a>
+    <p><a href="/signup/" data-toggle="collapse" data-target="#example-navbar-collapse" style="color:white">No tienes cuenta?  Crea una </a></p>
+    <button type="submit">Entrar</button>
+  </font>
   </form>
+</div>
+  
+
 {% endblock %}

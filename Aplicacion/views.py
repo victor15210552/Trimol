@@ -1,10 +1,28 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
-from Aplicacion.forms import SignUpForm, Hospital_form, Especialidad_form, Sector_form, Estado_form
+from Aplicacion.forms import SignUpForm, Hospital_form, Sector_form, Estado_form
 #Prueva view dinamic
-from django.views.generic import ListView,DetailView,TemplateView
+from django.views.generic import ListView,DetailView,TemplateView,CreateView,UpdateView
 from django.views.generic.edit import FormView
+from Aplicacion.models import Hospital,Usuario
+from django.urls import reverse_lazy
+from django.contrib.auth.models import User
+
+class Perfil_View(TemplateView):
+  template_name = 'perfil.html'
+
+  def get_context_data(self, **kwargs):
+    context = super(Perfil_View, self).get_context_data(**kwargs)
+    user = User.objects.get(username=self.request.user.username)
+    context['object_list'] = Usuario.objects.filter(user=user)
+    return context
+
+class Perfil_Update(UpdateView):
+  model = Usuario
+  fields = ['email','image','Direccion','TipodeSangre','Alergias']
+  template_name = 'perfil_update.html'
+  success_url = reverse_lazy('perfil_view')
 
 def Hospital(request):
     args={}
@@ -12,26 +30,6 @@ def Hospital(request):
 
     args['articles']=Hospital.objects.all()
     return render_to_response('Hospital.html',args)
-
-
-
-
-
-#def Hospital(request):
- #    form=Hospital_form(request.POST or None)
-  #   if request.method=='POST':
-   #     if form.is_valid():
-    #        form.save()
-     #       form = Hospital_form()
-     #return render(request,'Hospital.html',{'form':form,'titulo':'Hospital'})
-
-def Especialidad(request):
-     form=Especialidad_form(request.POST or None)
-     if request.method=='POST':
-        if form.is_valid():
-            form.save()
-            form = Especialidad_form()
-     return render(request,'Especialidad.html',{'form':form,'titulo':'Especialidad'})
 
 def Sector(request):
      form=Sector_form(request.POST or None)
@@ -56,8 +54,12 @@ def home(request):
 def Perfil(request):
     return render(request, 'perfil.html')
 
+
 def buscar(request):
     return render(request, 'buscar.html')
+
+
+
 
 def Foro(request):
     return render(request, 'foro.html')
@@ -71,23 +73,30 @@ def contactos(request):
 def Nopermisos(request):
   return render(request, 'Nopermisos.html')
 
-def signup(request):
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('home')
-    else:
-        form = SignUpForm()
-    return render(request, 'signup.html', {'form': form})
+class SignUp(CreateView):
+  template_name = 'signup.html'
+  form_class = SignUpForm
+  success_url = reverse_lazy('login')
 
+  def form_valid(self, form):
+    user = form.save()
+    p = Usuario()
+    p.user = user
+    p.email = form.cleaned_data['email']
+    p.image = form.cleaned_data['image']
+    p.Direccion=form.cleaned_data['Direccion']
+    #p.is_staff=True
+    p.save()
+    return super(SignUp, self).form_valid(form)
 
 def prueba(request):
     return render(request, 'prueba.html')
+
+def Ruta(request):
+    return render(request, 'ruta.html')
+def test(request):
+    return render(request, 'test.html')
+
 
 #Reporte
 #1. Importar el modelo ej. 
@@ -97,20 +106,7 @@ def reporte_uno(request):
   return render(request, 'reporte.html', {'Hospital': Hospital.objects.all()})  
 
 #Prueba dinamic view
-def DetallePublicacion(request,pk):
-    try:
-        pub_id=Hospital.objects.get(pk=pk)
-    except Hospital.DoesNotExist:
-        raise Http404("No existe ese Hospital")
-    if request.method == 'POST':
-        pub_id=Hospital.autorizados_objects.get(pk=pk)
-        pub_id.like()
 
-    return render(
-        request,
-        'detallepublicacion.html',
-        context={'Hospital':pub_id,}
-    )
 
 class TodasPublicaciones(ListView):
     model=Hospital
@@ -149,24 +145,21 @@ class BuscarView(TemplateView):
 
   def post(self,request,*args, **kwargs):
     buscar=request.POST['buscalo']
+    Especialidad=Hospital.objects.filter(Especialidad__contains=buscar)    
     Hospitales=Hospital.objects.filter(Nombre__contains=buscar)
     if Hospitales:
       print ("Ha buscado un hospitalpor su nombre")
       return render(request,'busca.html',
         {'Hospitales':Hospitales, 'hospital':True})
+    elif Especialidad:
+      print ("Ha buscado un hospitalpor su especialidad")
+      return render(request,'busca.html',
+        {'Hospitales':Especialidad, 'hospital':True})
     else:
       print ("NO existe")
       return render(request, 'Noexiste.html')
 
-class BuscarEspecialidad(TemplateView):
 
-  def post(self,request,*args, **kwargs):
-    especialidad=request.POST['especial']
-    Especialidades=Especialidad.objects.filter(Nombre__contains=especialidad)
-    if Especialidades:
-      print ("Ha buscado una especialidad su nombre")
-     # return render(request,'buscaE.html',
-      # {'Especialidades':Especialidades, 'especial':True})
 
 #Prueba imagen 1.0
 def list_hospital(request):
@@ -191,3 +184,29 @@ class publicos(ListView):
     
     def get_queryset(self):
         return Hospital.objects.all().filter(Sector=1).order_by('calificacion').reverse()
+
+
+class datos_hosp(ListView):
+    model=Hospital
+    template_name='hosp.html'
+    queryset = Hospital.autorizados_objects.all()
+
+
+def DetallePublicacion(request,pk):
+    try:
+        pub_id=Hospital.objects.get(pk=pk)
+    except Hospital.DoesNotExist:
+        raise Http404("No existe ese Hospital")
+    if request.method == 'POST':
+        pub_id=Hospital.autorizados_objects.get(pk=pk)
+        pub_id.like()
+
+    return render(
+        request,
+        'detallepublicacion.html',
+        context={'Hospital':pub_id,}
+    )
+
+
+
+

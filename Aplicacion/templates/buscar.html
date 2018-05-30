@@ -1,118 +1,101 @@
  {% extends 'base.html' %}
 {% block content %}
- <h3>Busqueda de Hospitales</h3>
 
-<!--Prueba 2 busqueda FAIL
-<input type="text" id="search" name="search">
-<ul id="search-result">
-  
-</ul>
-{%if Hospital.count > 0%}
-
-{%for Hospital in articles %}
-  <li><a href="/articles/get/{{Hospital.id}}/">{{Hospital.Nombre}}</a></li>
-{%endfor%}
-
-{%else%}
-
-<li>None to show!!</li>
-{%endif%}
--->
-
-  <p>
-     <h2> En este espacio podra usted investigar algun hospital en especifico. </h2>
-  </p>
-
-
-  <!--Prueba Option Wait!!
-  <select>
-    <option>Elige un Hospital</option>
-    {%for Hospital in hospital%}
-    <option value="{{Hospital.Nombre}}">{{Hospital.Nombre}}</option>
-    {%endfor%}
-  </select>
-
-  <div id="datos">
-    
-  </div>-->
-
-  <div class="busqueda">
-    <form class="navbar-search pull-left" method="POST" action="/busca/">{% csrf_token %}
-      <input type="text" name="buscalo" class="search-query" placeholder="Buscar Hospital">
-      <div class="btn-group">
-        <button class="btn btn-primary" type="submit"><i class="icon-search"></i>          
-        </button>
-
-      </div>      
-    </form>
-
-  </div>
-
-
-
-       <div id="map"></div>
-    <script>
-      // Note: This example requires that you consent to location sharing when
-      // prompted by your browser. If you see the error "The Geolocation service
-      // failed.", it means you probably did not give permission for the browser to
-      // locate you.
-
-      function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 15
-        });
-        var infoWindow = new google.maps.InfoWindow({map: map});
-
-        // Try HTML5 geolocation.
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('Tu estas por aqui!');
-            map.setCenter(pos);
-          }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
-          });
-        } else {
-          // Browser doesn't support Geolocation
-          handleLocationError(false, infoWindow, map.getCenter());
-        }
-      }
-
-      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-                              'Error: The Geolocation service failed.' :
-                              'Error: Your browser doesn\'t support geolocation.');
-      }
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDptcwGDvRThh5vZvP7UEdsOWSUmPsO0MU&callback=initMap">
-    </script>
-  }
-<!--
-   <div id="map"></div>
-    <script>
-      function initMap() {
-        var uluru = {lat: 32.530305, lng: -116.988158};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 15,
-          center: uluru
-        });
-        var marker = new google.maps.Marker({
-          position: uluru,
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+    #mapa { height: 450px; }
+    </style>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript">
+    function initialize() {
+      var marcadores = [
+        ['Hospital Guadalajara', 32.534372, -117.04662],
+        ['Hospital Guzman', 32.525442, -117.064427],
+        ['Hospital Excel', 32.520928, -117.011867],
+        ['Hospital General Tijuana', 32.52553, -117.009589],
+        ['Centro Medico Florence, S.A. De C.V.', 32.522888, -117.031433],
+        ['ISSSTECALI El Mirador', 32.530726, -117.091727],
+        ['La raza', 32.53736, -117.015058],
+        ['Seguro Popular', 32.526199, -117.009839],
+        ['Hospital Angeles', 32.51787, -117.007821],
+        ['Hospital del Prado', 32.509708, -116.990122],
+        ['ISSSTE', 32.508224, -116.98514],
+        ['IMSS Hospital General Regional Número 20', 32.498338, -116.965325],
+        ['Hospital Mi Doctor', 32.534103, -117.022713],
+        ['SIMNSA', 32.539, -117.028094],
+        ['Hospital México', 32.538511, -117.028054],
+        ['Hospital Sonora', 32.488474, -116.951358],
+        ['Hospital Vida', 32.514995, -116.887322],
+        ['Hospital Infantil de las Californias', 32.539741, -116.938352],
+        ['Hospital General Regional No.1 IMSS', 32.476216, -116.926737],
+        ['Hospital del Carmen', 32.51467, -117.017956],
+        ['Hospital Arcángeles', 32.490402, -116.957699],
+        ['Hospital Insurgentes Rio', 32.489795, -116.928038],
+        ['Hospital Lityen', 32.52392132, -117.01404915],
+        ['Hospital Marlef', 32.66012181, -115.43177297],
+        ['Hospital General Tecate', 32.5579347, -116.63205825],
+        ['Hospital Velmar', 31.85167998, -116.61374062],
+        ['Hospital Bonanova', 32.34022813, -117.05647036],
+        ['Hospital de Lourdes', 32.59275066, -115.39486575],
+        ['Hospital de las Californias', 32.65723095, -115.49531121],
+        ['Hospital General Rosarito', 32.36351212, -117.05575714],
+        ['Hospital General Ensenada', 31.82540204, -116.59982832],
+        ['Hospital Jardon', 32.36497847, -117.05395704],
+        ['Hospital el Cripres', 31.80684382, -116.59787085],
+        ['Medica FEM Hospital', 32.6639385, -115.47963734],
+        ['Hospital San Andres', 32.66500606, -115.48364311],
+        ['Hospital San Angel', 32.66427084, -115.47527583],
+      ];
+      var map = new google.maps.Map(document.getElementById('mapa'), {
+        zoom: 9,
+        center: new google.maps.LatLng(32.2491512,-116.1019119),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      });
+      var infowindow = new google.maps.InfoWindow();
+      var marker, i;
+      for (i = 0; i < marcadores.length; i++) {  
+        marker = new google.maps.Marker({
+          position: new google.maps.LatLng(marcadores[i][1], marcadores[i][2]),
           map: map
         });
+        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+          return function() {
+            infowindow.setContent(marcadores[i][0]);
+            infowindow.open(map, marker);
+          }
+        })(marker, i));
       }
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
     </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDptcwGDvRThh5vZvP7UEdsOWSUmPsO0MU&callback=initMap">
-    </script>
--->
-   
+  </head>
+  <body>
+  <br>
+<br>
+<br>
+<br>
+  
+<br>
+<br>
+    <p>
+
+     <h2> En este espacio podra usted investigar algun hospital en especifico. </h2>
+  </p>
+  <div class="busqueda">
+    <form class="navbar-search pull-left" method="POST" action="/busca/">{% csrf_token %}<font size="5">
+      <input type="text" name="buscalo" class="search-query" placeholder="Buscar Hospital" style='width:500px; height:30px;'>
+      <div class="btn-group">
+        <button class="btn btn-primary" type="submit" style="font-size: 20pt;">Buscar<i class="icon-search"></i>          
+        </button>
+      </div>      </font>
+    </form><br>
+  <br>
+  </div>
+  <br>
+  <br>
+    <div id="mapa"></div>
+  </body>
+
+
 {% endblock %}

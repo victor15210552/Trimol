@@ -1,57 +1,49 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 {%block content%}
+
+<br><br><br><br><br><br><br>
+    <section class="about text-center" id="about">
+    <div class="container">
+      <div class="row">
+             {% if object_list %}
     
-    {% if object_list %}
-    
-      {% for Hospital in object_list %}
-      <h3><a href="{{ Hospital.get_absolute_url}}">
-              <big>{{ Hospital.Nombre}}</big></h3></a>
-              Recomendaciones: <b>{{Hospital.calificacion}}</b>, {{Hospital.Sector}}.
-        <p></p>
-        <p></p>
+             {% for Hospital in object_list %}
+           <FONT SIZE=7><a href="{{ Hospital.get_absolute_url}}">
+              <big>{{ Hospital.Nombre}}</big></font></a>
+              <h3>Recomendaciones: <b>{{Hospital.calificacion}}</b><br>{{Hospital.Sector}}</h3>
+                <p></p>
+                 <p></p>
               {% if Hospital.Imagen %}
               <img class="img-rounded center-block" src="{{Hospital.Imagen.url}}" height="400" width="550">
               {% endif %}
-  </p>
+             </p>
 
 
-    <!--<div id="map"></div>
-    <script>    
-      function initMap() {
-        var uluru = {lat: {{Hospital.Latitud}}, lng: {{Hospital.Longitud}} }; 
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 17,
-          center: uluru
-        });
-        var marker = new google.maps.Marker({
-          position: uluru,
-          map: map
-        });
-      }
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDptcwGDvRThh5vZvP7UEdsOWSUmPsO0MU&callback=initMap">
-    </script>-->
+           
       
-      {% endfor %}
+                 {% endfor %}
      
-    {% else %}
-      <p>No existe ese hospital.</p>
-    {% endif %}
-    <ul class="pager">
-      <li>
-        {% if page_obj.has_previous%}
-        <a href="?page={{ page_obj.previous_page_number  }}">Previos</a>
-        {%endif%}
-      </li>
+                 {% else %}
+                   <p>No existe ese hospital.</p>
+                  {% endif %}
+                  <ul class="pager">
+                     <li>
+                  {% if page_obj.has_previous%}
+                   <a href="?page={{ page_obj.previous_page_number  }}">Previos</a>
+                   {%endif%}
+                      </li>
 
         
-      <li>
-        {% if page_obj.has_next%}
-<a href="?page={{ page_obj.next_page_number  }}">Next</a>
-        {%endif%}
+                  <li>
+                 {% if page_obj.has_next%}
+                   <a href="?page={{ page_obj.next_page_number  }}">Next</a>
+                     {%endif%}
 
-      </li>
-    </ul>
+             </li>
+          </ul>
+        </div>
+     </div>
+  </section>
     
 {%endblock%}

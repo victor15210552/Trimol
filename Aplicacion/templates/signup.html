@@ -1,21 +1,17 @@
-{% extends 'baselogin.html' %}
-
+{% extends 'login2.html'%}
 {% block content %}
-  <h2>Sign up</h2>
-  <form method="post">
-    {% csrf_token %}
-    {% for field in form %}
-      <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% if field.help_text %}
-          <small style="color: grey">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
-        {% endfor %}
-      </p>
-    {% endfor %}
-    <button type="submit">Sign up</button>
-  </form>
+<title>Sign Up</title>
+<div class="div-title">
+  <h2>Sign Up</h2>
+</div>
+<div class="div-align">
+<form method="POST" class="pure-form" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p}}
+    <button type="submit" class="btn btn-default">Save<span class="glyphicon glyphicon-ok" aria-hidden="true">
+    </span></button>
+    <button type="reset" class="btn btn-default">Cancel<span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+</form>
+</div>
 {% endblock %}
+

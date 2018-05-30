@@ -1,17 +1,54 @@
 {% extends 'base.html' %}
+{% block title %}Index{% endblock %}
+{% block content %}
+{% load staticfiles %}
+<h1 >Perfil</h1>
+<table id="TableForm" class="TableForm pure-form pure-form-aligned">
+{% for item in object_list%}
+  <section class="about text-center" id="about">
+    <div class="container">
+      <div class="row">
 
-{%block content%}
-<h1><u><b>Nombre de Usuario:</b></u> {{ user.username }}</h1>
-<h3> <u><b>Nombre:</b></u> {{ user.first_name }}
-<p>
-	<u><b>Apellido:</b></u> {{ user.last_name }}
-</p>
-<p>
-	<u><b>E-mail:</b></u> {{ user.email }}
-</p>
-<p>
-	<u><b>Fecha de registro:</b></u> {{ user.date_joined}}
-</p>
-</h3>
+      <div class="col-md-4 col-sm-6">
+					<div class="single-about-detail clearfix">
 
-{%endblock%}
+						<div class="about-img">
+						<br>
+						<br>
+						<br>
+							<img class="img-responsive" src="{{item.image.url}}" alt="">
+						</div>
+						<div class="about-details">
+							<div class="pentagon-text">
+							
+							</div>
+							<h3>Usuario:</h3>
+							<h4>{{ item.user_perfil }}</h4>
+							<h3>Email:</h3>
+                            <h4>{{item.email}}</h4>
+                            <h3>Direccion:</h3>
+                            <h4>{{item.Direccion}}</h3>
+                            <h3>Alergias: </h2>
+                            <h4>{{item.Alergias}}</h3>
+                            <h3>TipodeSangre :</h2>
+                            <h4>{{item.TipodeSangre}}</h3>
+	
+	
+						</div>
+					</div>
+				</div>
+
+
+
+           <br>
+           <br>
+
+      <h1><a  href="/update_perfil/{{item.pk}}"><button type="submit" class="pure-button pure-button-active">Editar <span class="" aria-hidden="true"></span></button></a></h1>
+     </div>
+    </div>
+  </section>
+   
+{% endfor %}
+
+
+{% endblock %}
